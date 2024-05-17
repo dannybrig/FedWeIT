@@ -50,7 +50,51 @@ class DataLoader:
                 4: ['traffic_sign_7', 'face_scrub_5', 'traffic_sign_6', 'traffic_sign_3', 'traffic_sign_2','cifar100_12', 'cifar100_11', 'cifar100_9', 'face_scrub_12', 'face_scrub_4']
             }
             self.state['tasks'] = task_set[self.state['client_id']]
-        
+
+        elif self.args.task == 'mnist':
+            task_set = {
+                0: ['mnist_0_0', 'mnist_1_0', 'mnist_2_0', 'mnist_3_0', 'mnist_4_0'],
+                1: ['mnist_0_1', 'mnist_1_1', 'mnist_2_1', 'mnist_3_1', 'mnist_4_1'], 
+                2: ['mnist_0_2', 'mnist_1_2', 'mnist_2_2', 'mnist_3_2', 'mnist_4_2'],
+                3: ['mnist_0_3', 'mnist_1_3', 'mnist_2_3', 'mnist_3_3', 'mnist_4_3'],
+                4: ['mnist_0_4', 'mnist_1_4', 'mnist_2_4', 'mnist_3_4', 'mnist_4_4'],
+                5: ['mnist_0_5', 'mnist_1_5', 'mnist_2_5', 'mnist_3_5', 'mnist_4_5'],
+                6: ['mnist_0_6', 'mnist_1_6', 'mnist_2_6', 'mnist_3_6', 'mnist_4_6'],
+                7: ['mnist_0_7', 'mnist_1_7', 'mnist_2_7', 'mnist_3_7', 'mnist_4_7'],
+                8: ['mnist_0_8', 'mnist_1_8', 'mnist_2_8', 'mnist_3_8', 'mnist_4_8'],
+                9: ['mnist_0_9', 'mnist_1_9', 'mnist_2_9', 'mnist_3_9', 'mnist_4_9'],
+            }
+            self.state['tasks'] = task_set[self.state['client_id']]
+
+        elif self.args.task == 'cifar10':
+            task_set = {
+                0: ['cifar10_0_0', 'cifar10_1_0', 'cifar10_2_0', 'cifar10_3_0', 'cifar10_4_0'],
+                1: ['cifar10_0_1', 'cifar10_1_1', 'cifar10_2_1', 'cifar10_3_1', 'cifar10_4_1'], 
+                2: ['cifar10_0_2', 'cifar10_1_2', 'cifar10_2_2', 'cifar10_3_2', 'cifar10_4_2'],
+                3: ['cifar10_0_3', 'cifar10_1_3', 'cifar10_2_3', 'cifar10_3_3', 'cifar10_4_3'],
+                4: ['cifar10_0_4', 'cifar10_1_4', 'cifar10_2_4', 'cifar10_3_4', 'cifar10_4_4'],
+                5: ['cifar10_0_5', 'cifar10_1_5', 'cifar10_2_5', 'cifar10_3_5', 'cifar10_4_5'],
+                6: ['cifar10_0_6', 'cifar10_1_6', 'cifar10_2_6', 'cifar10_3_6', 'cifar10_4_6'],
+                7: ['cifar10_0_7', 'cifar10_1_7', 'cifar10_2_7', 'cifar10_3_7', 'cifar10_4_7'],
+                8: ['cifar10_0_8', 'cifar10_1_8', 'cifar10_2_8', 'cifar10_3_8', 'cifar10_4_8'],
+                9: ['cifar10_0_9', 'cifar10_1_9', 'cifar10_2_9', 'cifar10_3_9', 'cifar10_4_9'],
+            }
+            self.state['tasks'] = task_set[self.state['client_id']]
+
+        elif self.args.task == 'cifar100':
+            task_set = {
+                0: ['cifar100_0_0', 'cifar100_1_0', 'cifar100_2_0', 'cifar100_3_0', 'cifar100_4_0', 'cifar100_5_0', 'cifar100_6_0', 'cifar100_7_0', 'cifar100_8_0', 'cifar100_9_0'],
+                1: ['cifar100_0_1', 'cifar100_1_1', 'cifar100_2_1', 'cifar100_3_1', 'cifar100_4_1', 'cifar100_5_1', 'cifar100_6_1', 'cifar100_7_1', 'cifar100_8_1', 'cifar100_9_1'], 
+                2: ['cifar100_0_2', 'cifar100_1_2', 'cifar100_2_2', 'cifar100_3_2', 'cifar100_4_2', 'cifar100_5_2', 'cifar100_6_2', 'cifar100_7_2', 'cifar100_8_2', 'cifar100_9_2'],
+                3: ['cifar100_0_3', 'cifar100_1_3', 'cifar100_2_3', 'cifar100_3_3', 'cifar100_4_3', 'cifar100_5_3', 'cifar100_6_3', 'cifar100_7_3', 'cifar100_8_3', 'cifar100_9_3'],
+                4: ['cifar100_0_4', 'cifar100_1_4', 'cifar100_2_4', 'cifar100_3_4', 'cifar100_4_4', 'cifar100_5_4', 'cifar100_6_4', 'cifar100_7_4', 'cifar100_8_4', 'cifar100_9_4'],
+                5: ['cifar100_0_5', 'cifar100_1_5', 'cifar100_2_5', 'cifar100_3_5', 'cifar100_4_5', 'cifar100_5_5', 'cifar100_6_5', 'cifar100_7_5', 'cifar100_8_5', 'cifar100_9_5'],
+                6: ['cifar100_0_6', 'cifar100_1_6', 'cifar100_2_6', 'cifar100_3_6', 'cifar100_4_6', 'cifar100_5_6', 'cifar100_6_6', 'cifar100_7_6', 'cifar100_8_6', 'cifar100_9_6'],
+                7: ['cifar100_0_7', 'cifar100_1_7', 'cifar100_2_7', 'cifar100_3_7', 'cifar100_4_7', 'cifar100_5_7', 'cifar100_6_7', 'cifar100_7_7', 'cifar100_8_7', 'cifar100_9_7'],
+                8: ['cifar100_0_8', 'cifar100_1_8', 'cifar100_2_8', 'cifar100_3_8', 'cifar100_4_8', 'cifar100_5_8', 'cifar100_6_8', 'cifar100_7_8', 'cifar100_8_8', 'cifar100_9_8'],
+                9: ['cifar100_0_9', 'cifar100_1_9', 'cifar100_2_9', 'cifar100_3_9', 'cifar100_4_9', 'cifar100_5_9', 'cifar100_6_9', 'cifar100_7_9', 'cifar100_8_9', 'cifar100_9_9'],
+            }
+
         else:
             print('no correct task was given: {}'.format(self.args.task))
             os._exit(0)

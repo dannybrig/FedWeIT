@@ -45,7 +45,7 @@ class DataGenerator:
             mixture = np.load(saved_mixture_filepath, allow_pickle=True)
         else:
             print('downloading & processing mixture data')
-            mixture = get(base_dir=self.mixture_dir, fixed_order=True)
+            mixture = get(self.args, base_dir=self.mixture_dir, fixed_order=True)
             np_save(self.mixture_dir, self.mixture_filename, mixture)
         self.generate_tasks(mixture)
 
@@ -74,6 +74,8 @@ class DataGenerator:
 
         if self.args.task == 'non_iid_50':
             self._generate_non_iid_50(dataset_id, x, y)
+        else:
+            self._generate_iid_data(dataset_id, x, y)
 
     def _generate_non_iid_50(self, dataset_id, x, y):
         labels = np.unique(y)
@@ -97,6 +99,48 @@ class DataGenerator:
             
             filename = '{}_{}'.format(self.did_to_dname[dataset_id], task_id)
             self._save_task(x_task, y_task, _labels, filename, dataset_id)
+
+    def _generate_iid_data(self, dataset_id, x, y):
+        labels = np.unique(y)
+        labels_per_task = [labels[i:i+self.args.num_classes] for i in range(0, len(labels), self.args.num_classes)]
+        for task_id, _labels in enumerate(labels_per_task):
+            self.task_cnt += 1
+            idx = np.concatenate([np.where(y[:]==c)[0] for c in _labels], axis=0)
+            random_shuffle(self.args.seed, idx)
+            x_task = x[idx]
+            y_task = y[idx]
+
+            idx_labels = [np.where(y_task[:]==c)[0] for c in _labels]
+            for i, idx_label in enumerate(idx_labels):
+                y_task[idx_label] = i # reset class_id 
+            y_task = tf.keras.utils.to_categorical(y_task, len(_labels))
+
+            # Chunk data into client specific datasets
+            num_samples = len(x_task)
+            chunk_size = num_samples // self.args.num_clients
+
+            # Shuffle
+            indices = np.arange(num_samples)
+            random_shuffle(self.args.seed, indices)
+
+            # Create Chunks
+            chunks = [indices[i*chunk_size:(i+1)*chunk_size] for i in range(self.args.num_clients)]
+
+            # Distribute leftover samples
+            leftover = indices[self.args.num_clients*chunk_size:]
+            for i in range(len(leftover)):
+                chunks[i] = np.append(chunks[i], leftover[i])
+
+            # Create the client subsets now
+            x_subsets = [x_task[chunk] for chunk in chunks]
+            y_subsets = [y_task[chunk] for chunk in chunks]
+
+            for client_id in range(self.args.num_clients):
+                filename = '{}_{}_{}'.format(self.did_to_dname[dataset_id], task_id, client_id)
+                self._save_task(x_subsets[client_id], y_subsets[client_id], _labels, filename, dataset_id)
+
+            # filename = '{}_{}'.format(self.did_to_dname[dataset_id], task_id)
+            # self._save_task(x_task, y_task, _labels, filename, dataset_id)
 
     def _save_task(self, x_task, y_task, labels, filename, dataset_id):
         # pairs = list(zip(x_task, y_task))

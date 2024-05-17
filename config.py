@@ -2,7 +2,7 @@
 
 def set_config(args):
 
-    args.output_path = '/path/to/outputs/'
+    args.output_path = './results/'
 
     args.sparse_comm = True 
     args.client_sparsity = 0.3
@@ -30,17 +30,40 @@ def set_config(args):
     return args
 
 def set_data_config(args):
-
-    args.task_path = '/path/to/task/'
     
     # CIFAR10(0), CIFAR100(1), MNIST(2), SVHN(3),
     # F-MNIST((4), TrafficSign(5), FaceScrub(6), N-MNIST(7)
     
     if args.task in ['non_iid_50'] :
+        args.task_path = '/home/dbrig/Data/FedWeIT_Stuff'
         args.datasets    = [0, 1, 2, 3, 4, 5, 6, 7]
         args.num_clients = 5
         args.num_tasks   = 10 
         args.num_classes = 5
+        args.frac_clients = 1.0
+
+    elif args.task == 'mnist':
+        args.task_path = '/home/dbrig/Data/FedWeIT_MNIST'
+        args.datasets = [2]
+        args.num_clients = 10
+        args.num_tasks = 5
+        args.num_classes = 2
+        args.frac_clients = 1.0
+
+    elif args.task == 'cifar10':
+        args.task_path = '/home/dbrig/Data/FedWeIT_CIFAR10'
+        args.datasets = [0]
+        args.num_clients = 10
+        args.num_tasks = 5
+        args.num_classes = 2
+        args.frac_clients = 1.0
+
+    elif args.task == 'cifar100':
+        args.task_path = '/home/dbrig/Data/FedWeIT_CIFAR100'
+        args.datasets = [1]
+        args.num_clients = 10
+        args.num_tasks = 10
+        args.num_classes = 10
         args.frac_clients = 1.0
     
     else:
